@@ -25,6 +25,9 @@ const createChat = (name, render) => {
 		rerender()
 	})
 	channel.on('message', (msg, from) => {
+		const stop = handlePingPong(msg)
+		if (stop) return
+
 		msg = Object.assign({from}, msg)
 		if (messages.find(compareMessages(msg))) return
 		messages = messages.concat(msg).sort(sortByWhen)
@@ -45,10 +48,36 @@ const createChat = (name, render) => {
 		rerender()
 	}
 
-	// ui
+	// ping logic
+
+	let peers = []
+
+	const handlePingPong = (msg, from) => {
+		if (!peers.includes(from)) peers.push(from)
+
+		if (msg.ping === true) {
+			channel.send({pong: true})
+			return true
+		}
+		if (msg.pong === true) return true
+		return false
+	}
+
+	const ping = () => {
+		peers = []
+		channel.send({ping: true})
+		setTimeout(rerender, 1000)
+	}
+
+	channel.once('open', () => {
+		ping()
+		setInterval(ping, 10 * 1000)
+	})
+
+	// connect ui
 
 	const rerender = () => {
-		render(open, messages, error)
+		render(open, messages, error, peers.length)
 	}
 
 	return {send}

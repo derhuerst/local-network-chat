@@ -12,6 +12,7 @@ const UI = {
 		this.close()
 	},
 	submit: function () {
+		if (!this.input) return
 		this.send(stripAnsi(this.input))
 		this.input = ''
 		this.render()
@@ -28,10 +29,11 @@ const UI = {
 
 	clear: '',
 	render: function (first) {
+		const {width, height} = termSize()
+
 		let out = ''
 		if (this.messages.length > 0) {
-			const rows = termSize().height
-			const messages = this.messages.slice(-rows + 1)
+			const messages = this.messages.slice(-height + 2)
 			const now = Date.now()
 
 			for (let msg of messages) {
@@ -44,8 +46,14 @@ const UI = {
 			}
 		} else out += chalk.gray('no messages') + '\n'
 
+		const peers = this.nrOfPeers + ' peers'
+		const err = this.error && this.error.message
+		out += [
+			err ? err.slice(0, width - peers.length - 1) : '',
+			peers
+		].join(' ') + '\n'
+
 		out += this.input ? chalk.bgWhite.black(this.input) : 'type a message…'
-		// todo: this.error
 
 		this.out.write(this.clear + out)
 		this.clear = cli.clear(out)
@@ -57,6 +65,7 @@ const defaults = {
 	input: '',
 	open: false,
 	error: null,
+	nrOfPeers: 0,
 	send: () => {}
 }
 
@@ -64,10 +73,11 @@ const createUI = (send) => {
 	const ui = Object.assign(Object.create(UI), defaults)
 	ui.send = send
 
-	const render = (open, messages, err) => {
+	const render = (open, messages, err, nrOfPeers) => {
 		ui.open = open
 		ui.messages = messages
 		ui.error = err
+		ui.nrOfPeers = nrOfPeers
 		ui.render()
 	}
 
