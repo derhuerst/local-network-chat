@@ -1,6 +1,7 @@
 'use strict'
 
 const createChannel = require('multicast-channel')
+const createUI = require('./ui')
 
 // state
 
@@ -41,4 +42,11 @@ const send = (content) => {
 
 	messages.push(msg)
 	rerender()
+}
+
+// ui
+
+const ui = createUI(send)
+const rerender = () => {
+	ui(open, messages, error)
 }

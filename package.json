@@ -25,6 +25,13 @@
 		"node": ">=6"
 	},
 	"dependencies": {
-		"multicast-channel": "^0.1.0"
+		"ansi-escapes": "^2.0.0",
+		"chalk": "^2.0.1",
+		"cli-styles": "^0.6.2",
+		"ms": "^2.0.0",
+		"multicast-channel": "^0.1.0",
+		"prompt-skeleton": "^0.4.0",
+		"strip-ansi": "^4.0.0",
+		"window-size": "^1.1.0"
 	}
 }
