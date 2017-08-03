@@ -3,9 +3,13 @@
 	"description": "A chat for the local network, powered by IP multicast.",
 	"version": "0.1.0",
 	"main": "index.js",
+	"bin": {
+		"local-network-chat": "./bin.js"
+	},
 	"files": [
 		"index.js",
-		"ui.js"
+		"ui.js",
+		"bin.js"
 	],
 	"keywords": [
 		"udp",
@@ -28,6 +32,7 @@
 		"ansi-escapes": "^2.0.0",
 		"chalk": "^2.0.1",
 		"cli-styles": "^0.6.2",
+		"mri": "^1.1.0",
 		"ms": "^2.0.0",
 		"multicast-channel": "^0.1.0",
 		"prompt-skeleton": "^0.4.0",

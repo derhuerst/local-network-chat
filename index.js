@@ -3,50 +3,55 @@
 const createChannel = require('multicast-channel')
 const createUI = require('./ui')
 
-// state
+const createChat = (render) => {
+	// state
 
-let messages = []
-let open = false
-let error = null
+	let messages = []
+	let open = false
+	let error = null
 
-// helpers
+	// helpers
 
-const compareMessages = (a) => (b) => {
-	return a.content === b.content && a.when === b.when && a.from === b.from
-}
-const sortByWhen = (a, b) => a.when - b.when
+	const compareMessages = (a) => (b) => {
+		return a.content === b.content && a.when === b.when && a.from === b.from
+	}
+	const sortByWhen = (a, b) => a.when - b.when
 
-// chat logic
+	// chat logic
 
-const channel = createChannel()
-channel.on('error', (err) => {
-	error = err
-	rerender()
-})
-channel.on('message', (msg, from) => {
-	msg = Object.assign({from}, msg)
-	if (messages.find(compareMessages(msg))) return
-	messages = messages.concat(msg).sort(sortByWhen)
-	rerender()
-})
+	const channel = createChannel()
+	channel.on('error', (err) => {
+		error = err
+		rerender()
+	})
+	channel.on('message', (msg, from) => {
+		msg = Object.assign({from}, msg)
+		if (messages.find(compareMessages(msg))) return
+		messages = messages.concat(msg).sort(sortByWhen)
+		rerender()
+	})
 
-const send = (content) => {
-	const onSent = () => {
-		msg.sending = false
+	const send = (content) => {
+		const onSent = () => {
+			msg.sending = false
+			rerender()
+		}
+
+		let msg = {content, when: Date.now()}
+		channel.send(msg, onSent)
+		msg = Object.assign({from: channel.id, sending: true}, msg)
+
+		messages.push(msg)
 		rerender()
 	}
 
-	let msg = {content, when: Date.now()}
-	channel.send(msg, onSent)
-	msg = Object.assign({from: channel.id, sending: true}, msg)
+	// ui
 
-	messages.push(msg)
-	rerender()
+	const rerender = () => {
+		render(open, messages, error)
+	}
+
+	return {send}
 }
 
-// ui
-
-const ui = createUI(send)
-const rerender = () => {
-	ui(open, messages, error)
-}
+module.exports = createChat
