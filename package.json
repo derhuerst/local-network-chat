@@ -1,0 +1,28 @@
+{
+	"name": "local-network-chat",
+	"description": "A chat for the local network, powered by IP multicast.",
+	"version": "0.1.0",
+	"main": "index.js",
+	"files": [
+		"index.js"
+	],
+	"keywords": [
+		"udp",
+		"multicast",
+		"local network",
+		"wifi",
+		"lan",
+		"chat",
+		"gossip"
+	],
+	"author": "Jannis R <mail@jannisr.de>",
+	"homepage": "https://github.com/derhuerst/local-network-chat",
+	"repository": "derhuerst/local-network-chat",
+	"bugs": "https://github.com/derhuerst/local-network-chat/issues",
+	"license": "ISC",
+	"engines": {
+		"node": ">=6"
+	},
+	"dependencies": {
+	}
+}
