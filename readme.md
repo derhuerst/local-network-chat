@@ -2,6 +2,8 @@
 
 **A chat for the local network, powered by [IP multicast](https://en.wikipedia.org/wiki/IP_multicast).**
 
+[![asciicast](https://asciinema.org/a/131994.png)](https://asciinema.org/a/131994?t=4)
+
 [![npm version](https://img.shields.io/npm/v/local-network-chat.svg)](https://www.npmjs.com/package/local-network-chat)
 [![build status](https://img.shields.io/travis/derhuerst/local-network-chat.svg)](https://travis-ci.org/derhuerst/local-network-chat)
 ![ISC-licensed](https://img.shields.io/github/license/derhuerst/local-network-chat.svg)

@@ -48,12 +48,11 @@ const UI = {
 
 		const peers = this.nrOfPeers + ' peers'
 		const err = this.error && this.error.message
-		out += [
-			err ? err.slice(0, width - peers.length - 1) : '',
-			peers
-		].join(' ') + '\n'
+		if (err) out += err.slice(0, width - peers.length - 1) + ' '
+		out += chalk.yellow(peers) + '\n'
 
-		out += this.input ? chalk.bgWhite.black(this.input) : 'type a message…'
+		if (this.input) out += chalk.underline(this.input)
+		else out += chalk.gray('type a message…')
 
 		this.out.write(this.clear + out)
 		this.clear = cli.clear(out)
