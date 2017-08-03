@@ -4,7 +4,8 @@
 	"version": "0.1.0",
 	"main": "index.js",
 	"files": [
-		"index.js"
+		"index.js",
+		"ui.js"
 	],
 	"keywords": [
 		"udp",
@@ -24,5 +25,6 @@
 		"node": ">=6"
 	},
 	"dependencies": {
+		"multicast-channel": "^0.1.0"
 	}
 }
