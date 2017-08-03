@@ -28,11 +28,13 @@ const UI = {
 
 	clear: '',
 	render: function (first) {
-		const now = Date.now()
-
 		let out = ''
 		if (this.messages.length > 0) {
-			for (let msg of this.messages) {
+			const rows = termSize().height
+			const messages = this.messages.slice(-rows + 1)
+			const now = Date.now()
+
+			for (let msg of messages) {
 				if (msg.sending) out += '⌛ '
 				out += [
 					chalk.gray(ms(now - msg.when)),
@@ -42,7 +44,7 @@ const UI = {
 			}
 		} else out += chalk.gray('no messages') + '\n'
 
-		out += this.input
+		out += this.input ? chalk.bgWhite.black(this.input) : 'type a message…'
 		// todo: this.error
 
 		this.out.write(this.clear + out)
