@@ -15,9 +15,9 @@ const argv = mri(process.argv.slice(2), {
 if (argv.help || argv.h) {
 	process.stdout.write(`
 Usage:
-    local-network-chat
+    local-network-chat [name]
 Examples:
-    local-network-chat
+    local-network-chat derhuerst
 \n`)
 	process.exit(0)
 }
@@ -30,4 +30,4 @@ if (argv.version || argv.v) {
 const send = (msg) => chat.send(msg)
 
 const ui = createUI(send)
-const chat = createChat(ui)
+const chat = createChat(argv._[0], ui)

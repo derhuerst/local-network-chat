@@ -18,7 +18,10 @@ npm install -g local-network-chat
 ## Usage
 
 ```shell
-todo
+Usage:
+    local-network-chat [name]
+Examples:
+    local-network-chat derhuerst
 ```
 
 

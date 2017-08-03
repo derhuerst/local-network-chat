@@ -3,7 +3,7 @@
 const createChannel = require('multicast-channel')
 const createUI = require('./ui')
 
-const createChat = (render) => {
+const createChat = (name, render) => {
 	// state
 
 	let messages = []
@@ -19,7 +19,7 @@ const createChat = (render) => {
 
 	// chat logic
 
-	const channel = createChannel()
+	const channel = createChannel({name})
 	channel.on('error', (err) => {
 		error = err
 		rerender()
