@@ -9,6 +9,7 @@ const cli = require('cli-styles')
 
 const UI = {
 	abort: function () {
+		clearInterval(this.renderInterval)
 		this.close()
 	},
 	submit: function () {
@@ -16,6 +17,7 @@ const UI = {
 		this.send(stripAnsi(this.input))
 		this.input = ''
 		this.render()
+		clearInterval(this.renderInterval)
 	},
 
 	_: function (key) {
@@ -65,12 +67,18 @@ const defaults = {
 	open: false,
 	error: null,
 	nrOfPeers: 0,
-	send: () => {}
+	send: () => {},
+
+	renderInterval: null
 }
 
 const createUI = (send) => {
 	const ui = Object.assign(Object.create(UI), defaults)
 	ui.send = send
+
+	ui.renderInterval = setInterval(() => {
+		ui.render()
+	}, 10 * 1000)
 
 	const render = (open, messages, err, nrOfPeers) => {
 		ui.open = open

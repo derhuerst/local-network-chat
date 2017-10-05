@@ -3,19 +3,17 @@
 const createChannel = require('multicast-channel')
 const createUI = require('./ui')
 
+const compareMessages = (a) => (b) => {
+	return a.content === b.content && a.when === b.when && a.from === b.from
+}
+const sortByWhen = (a, b) => a.when - b.when
+
 const createChat = (name, render) => {
 	// state
 
 	let messages = []
 	let open = false
 	let error = null
-
-	// helpers
-
-	const compareMessages = (a) => (b) => {
-		return a.content === b.content && a.when === b.when && a.from === b.from
-	}
-	const sortByWhen = (a, b) => a.when - b.when
 
 	// chat logic
 
