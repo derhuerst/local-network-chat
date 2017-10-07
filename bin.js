@@ -2,9 +2,9 @@
 'use strict'
 
 const mri = require('mri')
+const createUI = require('really-basic-chat-ui')
 
 const createChat = require('.')
-const createUI = require('./ui')
 
 const pkg = require('./package.json')
 

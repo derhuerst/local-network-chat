@@ -1,7 +1,6 @@
 'use strict'
 
 const createChannel = require('multicast-channel')
-const createUI = require('./ui')
 
 const compareMessages = (a) => (b) => {
 	return a.content === b.content && a.when === b.when && a.from === b.from

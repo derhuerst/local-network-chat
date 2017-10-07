@@ -8,7 +8,6 @@
 	},
 	"files": [
 		"index.js",
-		"ui.js",
 		"bin.js"
 	],
 	"keywords": [
@@ -29,14 +28,8 @@
 		"node": ">=6"
 	},
 	"dependencies": {
-		"ansi-escapes": "^2.0.0",
-		"chalk": "^2.0.1",
-		"cli-styles": "^0.6.2",
 		"mri": "^1.1.0",
-		"ms": "^2.0.0",
 		"multicast-channel": "^0.2.0",
-		"prompt-skeleton": "^0.4.0",
-		"strip-ansi": "^4.0.0",
-		"window-size": "^1.1.0"
+		"really-basic-chat-ui": "^0.1.0"
 	}
 }
