@@ -1,6 +1,7 @@
 'use strict'
 
 const createChannel = require('multicast-channel')
+const randomId = require('crypto-random-string')
 
 const compareMessages = (a) => (b) => {
 	return a.content === b.content && a.when === b.when && a.from === b.from
@@ -23,11 +24,11 @@ const createChat = (name, render) => {
 	})
 	channel.on('message', (msg, from) => {
 		const stop = handlePingPong(msg)
-		if (stop) return
+		if (stop || !msg || !msg.id || !msg.from || !msg.content) return
+		if (messages.find(msg2 => msg2.id === msg.id)) return
 
-		msg = Object.assign({from}, msg)
-		if (messages.find(compareMessages(msg))) return
-		messages = messages.concat(msg).sort(sortByWhen)
+		msg = Object.assign({from}, msg, {when: Date.now()})
+		messages.push(msg)
 		rerender()
 	})
 
@@ -37,9 +38,14 @@ const createChat = (name, render) => {
 			rerender()
 		}
 
-		let msg = {content, when: Date.now()}
+		let msg = {
+			id: randomId(10),
+			from: channel.id,
+			content,
+			when: Date.now()
+		}
 		channel.send(msg, onSent)
-		msg = Object.assign({from: channel.id, sending: true}, msg)
+		msg = Object.assign({sending: true}, msg)
 
 		messages.push(msg)
 		rerender()
