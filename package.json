@@ -1,7 +1,7 @@
 {
 	"name": "local-network-chat",
 	"description": "A chat for the local network, powered by IP multicast.",
-	"version": "0.1.1",
+	"version": "0.1.2",
 	"main": "index.js",
 	"bin": {
 		"local-network-chat": "./bin.js"
